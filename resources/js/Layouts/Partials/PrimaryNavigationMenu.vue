@@ -1,6 +1,6 @@
 <template>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-16 ">
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
@@ -13,6 +13,14 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                         Dashboard
+                    </jet-nav-link>
+
+                    <jet-nav-link v-if="$page.props.user.can['viewDocuments']" :href="route('documents')" :active="route().current('documents')">
+                        Documents
+                    </jet-nav-link>
+
+                    <jet-nav-link v-if="$page.props.user.can['viewMutations']" :href="route('mutations')" :active="route().current('mutations')">
+                        Mutations
                     </jet-nav-link>
                 </div>
             </div>
@@ -98,7 +106,7 @@
                                 Manage Account
                             </div>
 
-                            <jet-dropdown-link v-if="$page.props.admin || $page.props.user.can['viewNova']" :href="$page.props.admin.url" as="a">
+                            <jet-dropdown-link v-if="$page.props.user.can['viewNova']" :href="$page.props.admin.url" as="a">
                                 {{ $page.props.admin.name }}
                             </jet-dropdown-link>
 

@@ -26,3 +26,5 @@ mix.js('resources/js/app.js', '').vue()
 if (! mix.inProduction()) {
     mix.sourceMaps()
 }
+
+mix.version()

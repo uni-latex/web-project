@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Secure\DashboardController;
+use App\Http\Controllers\Secure\DocumentController;
+use App\Http\Controllers\Secure\MutationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +17,27 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/documents', [DocumentController::class, 'index'])->name('documents');
+    Route::get('/documents/download', [DocumentController::class, 'download'])->name('documents.download');
+
+    Route::get('/mutations', [MutationController::class, 'index'])->name('mutations');
+    Route::get('/mutations/download', [MutationController::class, 'download'])->name('mutations.download');
+
+});
+
+
+Route::get('/test', function () {
+    $user = \App\Models\User::find(2);
+
+    $permissions = \App\Models\Permission::all();
+
+    foreach ($permissions as $permission) {
+        dump($permission->name . ' -> ' . $user->hasPermissionTo($permission->name) );
+    }
+});

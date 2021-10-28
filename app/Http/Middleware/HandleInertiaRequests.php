@@ -50,9 +50,9 @@ class HandleInertiaRequests extends Middleware
                     return;
                 }
 
-                if (! $request->user()->hasPermissionTo('viewNova') && ! $request->user()->admin() ) {
-                    return;
-                }
+//                if (! $request->user()->hasPermissionTo('viewNova') && ! $request->user()->admin() ) {
+//                    return;
+//                }
 
                 return [
                     'url' => config('nova.path') . "/dashboards/main",

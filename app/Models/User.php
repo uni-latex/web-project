@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -68,6 +70,11 @@ class User extends Authenticatable
 
     public function getPermissionArray()
     {
+        if ($this->admin()) {
+            return Permission::all()->mapWithKeys(function ($perm) {
+                return [$perm['name'] => true];
+            });
+        }
         return $this->getAllPermissions()->mapWithKeys(function ($perm) {
             return [$perm['name'] => true];
         });

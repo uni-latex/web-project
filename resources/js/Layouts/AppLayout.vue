@@ -5,7 +5,7 @@
         <jet-banner />
 
         <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+            <nav class="bg-white border-b border-gray-100 bg-primary">
                 <!-- Primary Navigation Menu -->
                 <PrimaryNavigationMenu :show="showingNavigationDropdown" @toggleNavigation="onToggleNavigation" />
 
@@ -34,8 +34,8 @@
 
 <script>
     import JetBanner from '@/Jetstream/Banner'
-    import PrimaryNavigationMenu from "@/Layouts/PrimaryNavigationMenu";
-    import ResponsiveNavigationMenu from "@/Layouts/ResponsiveNavigationMenu";
+    import PrimaryNavigationMenu from "@/Layouts/Partials/PrimaryNavigationMenu";
+    import ResponsiveNavigationMenu from "@/Layouts/Partials/ResponsiveNavigationMenu";
     import { Head, Link } from '@inertiajs/inertia-vue'
 
     export default {
