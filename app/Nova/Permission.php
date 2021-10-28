@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Traits\Nova\CreateRedirectToIndex;
+use App\Traits\Nova\UpdateRedirectToIndex;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
@@ -12,6 +14,9 @@ use Laravel\Nova\Nova;
 
 class Permission extends Resource
 {
+    use CreateRedirectToIndex;
+    use UpdateRedirectToIndex;
+
     /**
      * The model the resource corresponds to.
      *

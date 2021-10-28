@@ -23,7 +23,7 @@ class CreateDocumentItemsTable extends Migration
 
         Schema::create('document_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('document_id')->references('id')->on('documents');
+            $table->foreignId('document_id')->references('id')->on('documents')->onDelete('cascade');
             $table->string('receipt_number');
             $table->date('receipt_date');
             $table->string('goods_code');

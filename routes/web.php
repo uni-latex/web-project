@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Secure\DashboardController;
 use App\Http\Controllers\Secure\DocumentController;
 use App\Http\Controllers\Secure\MutationController;
+use App\Http\Controllers\Secure\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/mutations', [MutationController::class, 'index'])->name('mutations');
     Route::get('/mutations/download', [MutationController::class, 'download'])->name('mutations.download');
 
+    Route::get('/upload', [UploadController::class, 'index'])->name('upload');
+    Route::post('/upload', [UploadController::class, 'upload']);
 });
 
 

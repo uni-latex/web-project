@@ -16,7 +16,7 @@
 
                         <!-- date range fields -->
                         <div class="flex w-full">
-                            <DatePicker v-model="dateRange" is-range :attributes="datePickerAttribute" class="w-full" require>
+                            <DatePicker v-model="dateRange" is-range :attributes="datePickerAttribute" class="w-full" required >
                                 <template v-slot="{ inputValue, inputEvents }">
                                     <div class="flex items-center space-x-4">
                                         <div class="w-full">
@@ -45,7 +45,7 @@
                         <div class="flex w-full space-x-4 items-center mt-6">
                             <div class="w-1/2">
                                 <jet-label for="mutation_type" value="Jenis Mutasi" />
-                                <jet-select id="mutation_type" class="mt-1 block w-full" v-model="form.mutation_type" :options="mutationTypeOptions" required autofocus />
+                                <jet-select id="mutation_type" class="mt-1 block w-full" v-model="form.mutation_type" :options="mutationTypeOptions" required />
                             </div>
                             <div class="w-1/2">
                             </div>
@@ -115,10 +115,17 @@
                 },
 
                 form: {
+                    mutation_type: this.filters.mutation_type,
                     start_date: this.filters.start_date,
                     end_date: this.filters.end_date,
-                    mutation_type: this.filters.mutation_type,
                 }
+            }
+        },
+
+        watch: {
+            dateRange() {
+                this.form.start_date = this.dateRange.start
+                this.form.end_date = this.dateRange.end
             }
         },
 

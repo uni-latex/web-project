@@ -3,27 +3,29 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Upload extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Customs\Upload::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -31,10 +33,26 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
     ];
 
-    public static $group = "System";
+    public static $group = "Customs";
+
+    public function fieldsForIndex(Request $request)
+    {
+        return [
+            Text::make(__('File Model'), function () {
+                return class_basename($this->file_model);
+            }),
+
+            Date::make(__('Created'), 'created_at')
+                ->format('DD MMMM Y'),
+
+            BelongsTo::make(__('User'), 'user', User::class),
+
+            Boolean::make(__('success'), 'is_success'),
+        ];
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -45,31 +63,25 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            Text::make(__('Type')),
 
-            Gravatar::make()->maxWidth(50),
+            Text::make(__('File Model')),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Date::make(__('File Date')),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+            Text::make(__('Temp File')),
 
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            Text::make(__('Original File')),
 
-            /** RELATION */
+            Text::make(__('File Size')),
 
-            MorphToMany::make(__('Roles'), 'roles', Role::class ),
+            BelongsTo::make(__('User'), 'user', User::class),
 
-//            MorphToMany::make(__('Permissions'), 'permissions', Permission::class)
-//                ->searchable(),
+            Boolean::make(__('success'), 'is_success'),
+
+            Textarea::make(__('Exception'))
+                ->alwaysShow(),
+
         ];
     }
 

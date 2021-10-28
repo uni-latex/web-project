@@ -16,7 +16,7 @@
 
                         <!-- date range fields -->
                         <div class="flex w-full">
-                            <DatePicker v-model="dateRange" is-range :attributes="datePickerAttribute" class="w-full" require>
+                            <DatePicker v-model="dateRange" is-range :attributes="datePickerAttribute" class="w-full" required>
                                 <template v-slot="{ inputValue, inputEvents }">
                                     <div class="flex items-center space-x-4">
                                         <div class="w-full">
@@ -45,7 +45,7 @@
                         <div class="flex w-full space-x-4 items-center mt-6">
                             <div class="w-full">
                                 <jet-label for="transaction_type" value="Jenis Transaksi" />
-                                <jet-select id="transaction_type" class="mt-1 block w-full" v-model="form.transaction_type" :options="transactionTypeOptions" required autofocus />
+                                <jet-select id="transaction_type" class="mt-1 block w-full" v-model="form.transaction_type" :options="transactionTypeOptions" required />
                             </div>
 
                             <div class="w-full">
