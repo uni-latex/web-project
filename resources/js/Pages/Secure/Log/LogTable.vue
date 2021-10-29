@@ -9,6 +9,7 @@
                         <th class="border p-2">No</th>
                         <th class="border p-2">Type</th>
                         <th class="border p-2">File</th>
+                        <th class="border p-2">File Date</th>
                         <th class="border p-2">Upload At</th>
                         <th class="border p-2">User</th>
                         <th class="border p-2">Status</th>
@@ -20,7 +21,8 @@
                         <td class="border p-2 text-center">{{ models.from + index}}</td>
                         <td class="border p-2 uppercase text-center">{{ model.type }}</td>
                         <td class="border p-2 truncate">{{ model.original_file }}</td>
-                        <td class="border p-2 truncate">{{ formatDate(model.created_at) }}</td>
+                        <td class="border p-2">{{ formatDate(model.file_date) }}</td>
+                        <td class="border p-2 truncate">{{ formatDateTime(model.created_at) }}</td>
                         <td class="border p-2 text-center">{{ model.user.name }}</td>
                         <td class="border p-2 flex justify-center items-start">
                             <svg v-if="model.is_success" class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -50,6 +52,10 @@
 
         methods: {
             formatDate(date) {
+                return moment(date).format('D MMMM Y')
+            },
+
+            formatDateTime(date) {
                 return moment(date).format('D MMMM Y, h:mm:ss a')
             }
         }
