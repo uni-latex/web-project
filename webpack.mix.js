@@ -18,13 +18,7 @@ mix.js('resources/js/app.js', '').vue()
     ])
     .webpackConfig(require('./webpack.config'))
     .setPublicPath('public/vendor/web')
-
-// if (mix.inProduction()) {
-//     mix.version();
-// }
-
+    .version()
 if (! mix.inProduction()) {
     mix.sourceMaps()
 }
-
-mix.version()

@@ -3,7 +3,7 @@
 
         <div class="text-2xl tracking-widest uppercase">Mutation</div>
 
-        <form @submit.prevent="uploadMutation">
+        <form @submit.prevent="uploadMutation" class="mt-6">
 
             <!-- date range fields -->
             <div class="flex w-full">
