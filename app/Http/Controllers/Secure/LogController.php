@@ -20,7 +20,7 @@ class LogController extends Controller
         $logs = Upload::select('type', 'file_date', 'original_file', 'user_id', 'created_at', 'is_success')
             ->with('user:id,name')
             ->latest()
-            ->paginate()
+            ->paginate(25)
             ->withQueryString();
 
         return Inertia::render('Secure/Log/Index', [
