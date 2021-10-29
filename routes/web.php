@@ -31,8 +31,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/mutations', [MutationController::class, 'index'])->name('mutations');
     Route::get('/mutations/download', [MutationController::class, 'download'])->name('mutations.download');
 
-    Route::get('/upload', [UploadController::class, 'index'])->name('upload');
-    Route::post('/upload', [UploadController::class, 'upload']);
+    Route::get('/uploads', [UploadController::class, 'index'])->name('uploads');
+    Route::post('/uploads', [UploadController::class, 'uploads']);
 
     Route::get('/logs', [LogController::class, 'index'])->name('logs');
 });

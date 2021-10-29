@@ -56,7 +56,7 @@
 
         methods: {
             uploadDocument() {
-                this.form.post(route('upload'), {
+                this.form.post(route('uploads'), {
                     onFinish: () => this.form.reset('file')
                 })
             },

@@ -13,8 +13,8 @@
                 Mutations
             </jet-responsive-nav-link>
 
-            <jet-responsive-nav-link v-if="$page.props.user.can['uploadDocument'] || $page.props.user.can['uploadMutation']" :href="route('upload')" :active="route().current('upload')">
-                Upload
+            <jet-responsive-nav-link v-if="$page.props.user.can['uploadDocument'] || $page.props.user.can['uploadMutation']" :href="route('uploads')" :active="route().current('uploads')">
+                Uploads
             </jet-responsive-nav-link>
 
             <jet-responsive-nav-link v-if="$page.props.user.can['viewLogs']" :href="route('logs')" :active="route().current('logs')">
