@@ -27,7 +27,11 @@ class UploadController extends Controller
     public function index(Request $request)
     {
         if (Auth::user()->can('uploadDocument') || Auth::user()->can('uploadMutation')) {
-            return Inertia::render('Secure/Upload/Index');
+            return Inertia::render('Secure/Upload/Index', [
+                "fields" => [
+                    'mutation_types' => config('customs.mutations.mutation_types'),
+                ],
+            ]);
         }
 
         return Redirect::route('dashboard');
@@ -69,7 +73,6 @@ class UploadController extends Controller
         $upload = Upload::create([
             'type' => $request->type,
             'file_model' => Document::class,
-            'temp_file' => $storageFile,
             'original_file' => $originalFile,
             'file_size' => $file->getSize(),
             'user_id' => Auth::user()->id,
@@ -111,11 +114,12 @@ class UploadController extends Controller
 
         $storageFile = Storage::put('customs', $file);
 
+        $model = config('customs.mutations.models')[$request->mutation_type];
+
         $upload = Upload::create([
             'type' => $request->type,
-            'file_model' => $this->mutationModel($request->mutation_type),
+            'file_model' => $model,
             'file_date' => $request->mutation_date,
-            'temp_file' => $storageFile,
             'original_file' => $originalFile,
             'file_size' => $file->getSize(),
             'user_id' => Auth::user()->id,
@@ -141,20 +145,6 @@ class UploadController extends Controller
         Storage::delete($storageFile);
 
         return Redirect::route('upload');
-    }
-
-    private function mutationModel($mutation_type)
-    {
-        $models = [
-            'bbp' => BahanBakuDanPenolong::class,
-            'bdp' => BarangDalamProses::class,
-            'bj' => BarangJadi::class,
-            'bs' => BarangSparepart::class,
-            'bsds' => BarangSisaDanScrap::class,
-            'mdpk' => MesinDanPeralatanKantor::class,
-        ];
-
-        return $models[$mutation_type];
     }
 
     private function parseDocumentFilename($filename)

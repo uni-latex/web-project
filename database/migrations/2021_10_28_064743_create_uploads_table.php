@@ -18,7 +18,6 @@ class CreateUploadsTable extends Migration
             $table->string('type'); // document / mutation
             $table->string('file_model');
             $table->date('file_date')->nullable();
-            $table->string('temp_file');
             $table->string('original_file');
             $table->integer('file_size');
             $table->foreignId('user_id')->references('id')->on('users');

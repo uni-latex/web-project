@@ -26,6 +26,10 @@
                     <jet-nav-link v-if="$page.props.user.can['uploadDocument'] || $page.props.user.can['uploadMutation']" :href="route('upload')" :active="route().current('upload')">
                         Upload
                     </jet-nav-link>
+
+                    <jet-nav-link v-if="$page.props.user.can['viewLogs']" :href="route('logs')" :active="route().current('logs')">
+                        Logs
+                    </jet-nav-link>
                 </div>
             </div>
 

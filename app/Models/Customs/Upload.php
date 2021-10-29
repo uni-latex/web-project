@@ -14,12 +14,13 @@ class Upload extends Model
         'type',
         'file_model',
         'file_date',
-        'temp_file',
         'original_file',
         'file_size',
         'user_id',
         'is_success',
         'exception',
+
+        //php artisan nova:resource
     ];
 
     protected $casts = [

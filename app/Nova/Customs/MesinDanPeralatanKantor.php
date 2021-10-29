@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Nova;
+namespace App\Nova\Customs;
 
+use App\Nova\Resource;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Upload extends Resource
+class MesinDanPeralatanKantor extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Customs\Upload::class;
+    public static $model = \App\Models\Customs\MesinDanPeralatanKantor::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -36,21 +35,17 @@ class Upload extends Resource
         'id',
     ];
 
-    public static $group = "Customs";
+    public static $group = 'Customs';
 
     public function fieldsForIndex(Request $request)
     {
         return [
-            Text::make(__('File Model'), function () {
-                return class_basename($this->file_model);
-            }),
+            Date::make(__('Mutation Date'))
+                ->format('DD/MM/YYYY'),
 
-            Date::make(__('Created'), 'created_at')
-                ->format('DD MMMM Y'),
+            Text::make(__('Goods Code')),
 
-            BelongsTo::make(__('User'), 'user', User::class),
-
-            Boolean::make(__('success'), 'is_success'),
+            Text::make(__("Goods Name")),
         ];
     }
 
@@ -63,23 +58,31 @@ class Upload extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make(__('Type')),
+            Date::make(__('Mutation Date'))
+                ->format('DD/MM/YYYY'),
 
-            Text::make(__('File Model')),
+            Text::make(__('Goods Code')),
 
-            Date::make(__('File Date')),
+            Text::make(__("Goods Name")),
 
-            Text::make(__('Original File')),
+            Text::make(__('Unit')),
 
-            Text::make(__('File Size')),
+            Text::make(__('Beginning Balance')),
 
-            BelongsTo::make(__('User'), 'user', User::class),
+            Text::make(__('Entering')),
 
-            Boolean::make(__('success'), 'is_success'),
+            Text::make(__('Spending')),
 
-            Textarea::make(__('Exception'))
+            Text::make(__('Compliance')),
+
+            Text::make(__('Final Balance')),
+
+            Text::make(__('Stock Opname')),
+
+            Text::make(__('Difference')),
+
+            Textarea::make(__('Annotation'))
                 ->alwaysShow(),
-
         ];
     }
 
@@ -125,5 +128,10 @@ class Upload extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
     }
 }

@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Nova;
+namespace App\Nova\Customs;
 
+use App\Nova\Resource;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Upload extends Resource
+class Document extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Customs\Upload::class;
+    public static $model = \App\Models\Customs\Document::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -36,23 +36,7 @@ class Upload extends Resource
         'id',
     ];
 
-    public static $group = "Customs";
-
-    public function fieldsForIndex(Request $request)
-    {
-        return [
-            Text::make(__('File Model'), function () {
-                return class_basename($this->file_model);
-            }),
-
-            Date::make(__('Created'), 'created_at')
-                ->format('DD MMMM Y'),
-
-            BelongsTo::make(__('User'), 'user', User::class),
-
-            Boolean::make(__('success'), 'is_success'),
-        ];
-    }
+    public static $group = 'Customs';
 
     /**
      * Get the fields displayed by the resource.
@@ -63,23 +47,17 @@ class Upload extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make(__('Type')),
+            Text::make(__('Document Type'), 'doc_type'),
 
-            Text::make(__('File Model')),
+            Text::make(__('Document Number'), 'doc_number'),
 
-            Date::make(__('File Date')),
+            Date::make(__('Document Date'), 'doc_date'),
 
-            Text::make(__('Original File')),
+            Text::make(__('Vendor')),
 
-            Text::make(__('File Size')),
+            /** RELATION */
 
-            BelongsTo::make(__('User'), 'user', User::class),
-
-            Boolean::make(__('success'), 'is_success'),
-
-            Textarea::make(__('Exception'))
-                ->alwaysShow(),
-
+            HasMany::make(__('Items'), 'items', DocumentItem::class),
         ];
     }
 
@@ -125,5 +103,10 @@ class Upload extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
     }
 }

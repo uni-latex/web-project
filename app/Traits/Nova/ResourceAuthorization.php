@@ -16,7 +16,7 @@ trait ResourceAuthorization
     {
         $user = $request->user();
 
-        if ( $user->admin() ) {
+        if ( $user->is_admin ) {
             return true;
         }
 
@@ -58,7 +58,7 @@ trait ResourceAuthorization
     {
         $user = $request->user();
 
-        if ( $user->admin() ) {
+        if ( $user->is_admin ) {
             return true;
         }
 
@@ -100,7 +100,7 @@ trait ResourceAuthorization
     {
         $user = $request->user();
 
-        if ( $user->admin() ) {
+        if ( $user->is_admin ) {
             return true;
         }
 

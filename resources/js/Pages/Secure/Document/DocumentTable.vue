@@ -1,5 +1,12 @@
 <template>
     <div v-if="documents.data.length > 0" class="mt-6 bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 text-sm">
+
+        <div v-if="$page.props.user.can['downloadMutations']" class="flex justify-end mb-6">
+            <button @click="download" class="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
+                Download
+            </button>
+        </div>
+
         <div class="overflow-auto">
 
             <table class="w-full">
@@ -10,8 +17,7 @@
                         <th class="border p-2" rowspan="2">Jenis<br>Dok.</th>
                         <th class="border p-2" colspan="2">Dokumen Pabean</th>
                         <th class="border p-2" colspan="2">Bukti Penerimaan Barang</th>
-                        <th v-if="transaction_type === 1" class="border p-2" rowspan="2">Pemasok / Pengirim</th>
-                        <th v-else class="border p-2" rowspan="2">Pembeli / Penerima</th>
+                        <th class="border p-2" rowspan="2">{{ vendorLabel }}</th>
                         <th class="border p-2" colspan="2">Detail Barang</th>
                         <th class="border p-2" rowspan="2">Satuan</th>
                         <th class="border p-2" rowspan="2">Valas</th>
@@ -75,13 +81,8 @@
 
         props: [
             'documents',
+            'transaction'
         ],
-
-        data() {
-            return {
-                transaction_type: 1,
-            }
-        },
 
         methods: {
             goodsName(item) {
@@ -90,7 +91,20 @@
                     name += ' ' + item.goods_name_2
                 }
                 return name
-            }
+            },
+
+            download() {
+                this.$emit('on-download')
+            },
         },
+
+        computed: {
+            vendorLabel() {
+                if (this.transaction === "0") {
+                    return "Pembeli / Penerima"
+                }
+                return "Pemasok / Pengirim"
+            }
+        }
     }
 </script>

@@ -1,5 +1,6 @@
 <template>
-    <app-layout>
+    <AppLayout>
+
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Documents
@@ -12,166 +13,140 @@
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 text-sm">
 
-                    <div class="flex flex-col">
+                    <div class="flex flex-col md:flex-row md:space-x-4">
 
                         <!-- date range fields -->
                         <div class="flex w-full">
-                            <DatePicker v-model="dateRange" is-range :attributes="datePickerAttribute" class="w-full" required>
-                                <template v-slot="{ inputValue, inputEvents }">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-full">
-                                            <jet-label for="start_date" value="Dari Tanggal" />
-                                            <input
-                                                class="w-full mt-1 p-2 border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm"
-                                                :value="formatDate(inputValue.start)"
-                                                v-on="inputEvents.start"
-                                            />
-                                        </div>
-                                        <div class="w-full">
-                                            <jet-label for="end_date" value="Sampai Tanggal" />
-                                            <input
-                                                class="w-full mt-1 p-2 border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm"
-                                                :value="formatDate(inputValue.end)"
-                                                v-on="inputEvents.end"
-                                            />
-                                        </div>
-                                    </div>
-
+                            <DatePicker is-range :columns="2" v-model="dateRange" :attributes="datePickerAttribute" class="w-full">
+                                <template v-slot="{ inputValue, togglePopover }">
+                                    <jet-label for="tanggal" value="Tanggal" />
+                                    <input class="mt-1 p-2.5 text-center w-full border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm"
+                                           :value="`${inputValue.start} - ${inputValue.end}`"
+                                           @click="togglePopover" />
                                 </template>
                             </DatePicker>
                         </div>
 
-                        <!-- document type fields -->
-                        <div class="flex w-full space-x-4 items-center mt-6">
-                            <div class="w-full">
-                                <jet-label for="transaction_type" value="Jenis Transaksi" />
-                                <jet-select id="transaction_type" class="mt-1 block w-full" v-model="form.transaction_type" :options="transactionTypeOptions" required />
-                            </div>
+                        <!-- transaksi fields -->
+                        <div class="flex flex-col w-full mt-2 md:mt-0">
+                            <jet-label for="transaction_type" value="Transaksi" />
+                            <jet-select id="transaction_type" class="mt-1 block w-full" v-model="form.transaction_type" :options="fields.transaction_types" required />
+                        </div>
 
-                            <div class="w-full">
-                                <jet-label for="doc_type" value="Dokumen Pabean" />
-                                <jet-select id="doc" class="mt-1 block w-full" v-model="form.doc_type" :options="docTypeOptions" required />
-                            </div>
-
-<!--                            <div class="w-full">-->
-<!--                                <jet-label for="page" value="Per Page" />-->
-<!--                                <jet-select id="page" class="mt-1 block w-full" v-model="form.per_page" :options="perPageOptions" required />-->
-<!--                            </div>-->
+                        <!-- dokumen fields -->
+                        <div class="flex flex-col w-full mt-2 md:mt-0">
+                            <jet-label for="document_type" value="Dokumen" />
+                            <jet-select id="document_type" class="mt-1 block w-full" v-model="form.doc_type" :options="fields.document_types" required />
                         </div>
 
                     </div>
 
-                    <!-- buttons -->
-                    <div class="flex justify-end mt-6">
-                        <button @click="filterDocuments"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
-                            Filter
-                        </button>
-                        <button v-if="canDownload" @click="downloadDocuments"
-                                class="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
-                            Download
-                        </button>
+                    <div class="flex flex-col md:flex-row md:space-x-4 mt-2 md:mt-4">
+
+                        <div class="flex flex-col w-full">
+                            <jet-label value="Kode Barang" />
+                            <jet-input type="text" class="mt-1 block w-full" v-model="form.goods_code" />
+                        </div>
+
+                        <div class="flex flex-col w-full mt-2 md:mt-0">
+                            <jet-label value="Nama Barang" />
+                            <jet-input type="text" class="mt-1 block w-full" v-model="form.goods_name" />
+                        </div>
+
+                        <div class="flex flex-col w-full mt-2 md:mt-0">
+                            <jet-label value="Vendor" />
+                            <jet-input type="text" class="mt-1 block w-full" v-model="form.vendor" />
+                        </div>
+
                     </div>
 
                 </div>
 
-                <DocumentTable :documents="documents" />
+                <DocumentTable :documents="models" :transaction="form.transaction_type" @on-download="onClickDownload" />
+
             </div>
 
         </div>
-    </app-layout>
+
+    </AppLayout>
 </template>
 
 <script>
     import AppLayout from '@/Layouts/AppLayout'
-    import JetButton from '@/Jetstream/Button'
-    import JetInput from '@/Jetstream/Input'
-    import JetCheckbox from '@/Jetstream/Checkbox'
-    import JetSelect from '@/Components/Select'
+    import DatePicker from 'v-calendar/lib/components/date-picker.umd'
     import JetLabel from '@/Jetstream/Label'
+    import JetInput from '@/Jetstream/Input'
+    import JetSelect from '@/Components/Select'
     import DocumentTable from "@/Pages/Secure/Document/DocumentTable";
     import pickBy from 'lodash/pickBy'
-    import DatePicker from 'v-calendar/lib/components/date-picker.umd'
+    import throttle from "lodash/throttle";
 
     export default {
-
         components: {
             AppLayout,
             DatePicker,
             JetLabel,
             JetInput,
-            JetCheckbox,
             JetSelect,
-            JetButton,
-            DocumentTable,
+            DocumentTable
         },
 
         props: {
+            fields: Object,
             filters: Object,
-            documents: Object,
+            models: Object,
         },
 
         data() {
             return {
-                transactionTypeOptions: {
-                    0: "Keluar",
-                    1: "Masuk",
-                },
-
-                docTypeOptions: {
-                    'BC2.3': 'BC2.3',
-                    'BC2.5': 'BC2.5',
-                    'BC2.7': 'BC2.7',
-                    'BC3.0': 'BC3.0',
-                    'BC4.0': 'BC4.0',
-                    'BC4.1': 'BC4.1'
-                },
-
-                perPageOptions: {
-                    25: 25,
-                    50: 50,
-                    100: 100,
-                },
-
                 dateRange: {
                     start: this.filters.start_date,
-                    end: this.filters.end_date
+                    end: this.filters.end_date,
                 },
 
                 form: {
                     transaction_type: this.filters.transaction_type,
                     doc_type: this.filters.doc_type,
-                    per_page: this.filters.per_page,
                     start_date: this.filters.start_date,
                     end_date: this.filters.end_date,
+                    goods_code: this.filters.goods_code,
+                    goods_name: this.filters.goods_name,
+                    vendor: this.filters.vendor,
                 },
             }
         },
 
         watch: {
             dateRange() {
-                this.form.start_date = this.dateRange.start
-                this.form.end_date = this.dateRange.end
+                this.form.start_date = this.formatDate(this.dateRange.start)
+                this.form.end_date = this.formatDate(this.dateRange.end)
+            },
+
+            form: {
+                deep: true,
+                handler: throttle(function () {
+                    this.$inertia.get(
+                        route('documents'),
+                        pickBy(this.form),
+                        {
+                            preserveState: true,
+                        }
+                    )
+                }, 150),
             }
         },
 
         methods: {
-            filterDocuments() {
-                this.formFormatDates
-                this.$inertia.get(this.route('documents'), pickBy(this.form), { preserveState: true})
+            formatDate(date) {
+                return moment(date).format('Y-MM-DD')
             },
 
-            downloadDocuments() {
-                this.formFormatDates
+            onClickDownload() {
                 const params = new URLSearchParams(this.form).toString()
                 const link = document.createElement('a');
                 link.href = route('documents.download') + `?${params}`
                 document.body.appendChild(link);
                 link.click();
-            },
-
-            formatDate(inputValue) {
-                return moment(inputValue, "MM/DD/YYYY").format('DD MMMM Y')
             },
         },
 
@@ -185,15 +160,6 @@
                     }
                 ]
             },
-
-            formFormatDates() {
-                this.form.start_date = moment(this.form.start_date).format('Y-MM-DD')
-                this.form.end_date = moment(this.form.end_date).format('Y-MM-DD')
-            },
-
-            canDownload() {
-                return this.$page.props.user.can['downloadDocuments']
-            },
-        }
+        },
     }
 </script>

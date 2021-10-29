@@ -1,5 +1,6 @@
 <template>
-    <app-layout>
+    <AppLayout>
+
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Mutations
@@ -12,140 +13,127 @@
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 text-sm">
 
-                    <div class="flex flex-col">
+                    <div class="flex flex-col md:flex-row md:space-x-4">
 
                         <!-- date range fields -->
                         <div class="flex w-full">
-                            <DatePicker v-model="dateRange" is-range :attributes="datePickerAttribute" class="w-full" required >
-                                <template v-slot="{ inputValue, inputEvents }">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-full">
-                                            <jet-label for="start_date" value="Dari Tanggal" />
-                                            <input
-                                                class="w-full mt-1 p-2 border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm"
-                                                :value="formatDate(inputValue.start)"
-                                                v-on="inputEvents.start"
-                                            />
-                                        </div>
-                                        <div class="w-full">
-                                            <jet-label for="end_date" value="Sampai Tanggal" />
-                                            <input
-                                                class="w-full mt-1 p-2 border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm"
-                                                :value="formatDate(inputValue.end)"
-                                                v-on="inputEvents.end"
-                                            />
-                                        </div>
-                                    </div>
+                            <DatePicker is-range :columns="2" v-model="dateRange" :attributes="datePickerAttribute" class="w-full">
+                                <template v-slot="{ inputValue, togglePopover }">
+                                    <jet-label for="tanggal" value="Tanggal" />
+                                    <input class="mt-1 p-2.5 text-center w-full border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm"
+                                           :value="`${inputValue.start} - ${inputValue.end}`"
+                                           @click="togglePopover" />
 
                                 </template>
                             </DatePicker>
                         </div>
 
-                        <!-- document type fields -->
-                        <div class="flex w-full space-x-4 items-center mt-6">
-                            <div class="w-1/2">
-                                <jet-label for="mutation_type" value="Jenis Mutasi" />
-                                <jet-select id="mutation_type" class="mt-1 block w-full" v-model="form.mutation_type" :options="mutationTypeOptions" required />
-                            </div>
-                            <div class="w-1/2">
-                            </div>
+                        <div class="flex flex-col w-full mt-2 md:mt-0">
+                            <jet-label for="mutation_type" value="Jenis Mutasi" />
+                            <jet-select id="mutation_type" class="mt-1 block w-full" v-model="form.mutation_type" :options="fields.mutation_types" required />
                         </div>
 
                     </div>
 
-                    <!-- buttons -->
-                    <div class="flex justify-end mt-6">
-                        <button @click="filterModels"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
-                            Filter
-                        </button>
-                        <button v-if="canDownload" @click="downloadModels"
-                                class="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
-                            Download
-                        </button>
+                    <div class="flex flex-col md:flex-row md:space-x-4 mt-2 md:mt-4">
+
+                        <div class="flex flex-col w-full">
+                            <jet-label for="goods_code" value="Kode Barang" />
+                            <jet-input type="text" class="mt-1 block w-full" v-model="form.goods_code" />
+                        </div>
+
+                        <div class="flex flex-col w-full mt-2 md:mt-0">
+                            <jet-label for="goods_name" value="Nama Barang" />
+                            <jet-input type="text" class="mt-1 block w-full" v-model="form.goods_name" />
+                        </div>
+
                     </div>
 
                 </div>
 
-                <MutationTable :models="models" />
+                <MutationTable :models="models" @on-download="onClickDownload" />
 
             </div>
 
         </div>
 
-    </app-layout>
+    </AppLayout>
 </template>
 
 <script>
     import AppLayout from '@/Layouts/AppLayout'
-    import JetSelect from '@/Components/Select'
-    import JetLabel from '@/Jetstream/Label'
-    import pickBy from 'lodash/pickBy'
     import DatePicker from 'v-calendar/lib/components/date-picker.umd'
-    import MutationTable from "@/Pages/Secure/Mutation/MutationTable";
+    import JetLabel from '@/Jetstream/Label'
+    import JetInput from '@/Jetstream/Input'
+    import JetSelect from '@/Components/Select'
+    import MutationTable from "@/Pages/Secure/Mutation/MutationTable"
+    import pickBy from 'lodash/pickBy'
+    import throttle from 'lodash/throttle'
 
     export default {
         components: {
             AppLayout,
-            JetLabel,
-            JetSelect,
             DatePicker,
+            JetLabel,
+            JetInput,
+            JetSelect,
             MutationTable,
         },
 
         props: {
+            fields: Object,
             filters: Object,
             models: Object,
         },
 
         data() {
             return {
-                mutationTypeOptions: {
-                    bbp: "Bahan Baku dan Bahan Penolong",
-                    bdp: "Posisi Barang dalam Proses ( WIP )",
-                    bj: "Barang Jadi",
-                    bs: "Barang Sparepart",
-                    bsds: "Barang Sisa dan Scrap",
-                    mdpk: "Mesin dan Peralatan Kantor",
-                },
-
                 dateRange: {
                     start: this.filters.start_date,
-                    end: this.filters.end_date
+                    end: this.filters.end_date,
                 },
 
                 form: {
                     mutation_type: this.filters.mutation_type,
                     start_date: this.filters.start_date,
                     end_date: this.filters.end_date,
+                    goods_code: this.filters.goods_code,
+                    goods_name: this.filters.goods_name,
                 }
             }
         },
 
         watch: {
             dateRange() {
-                this.form.start_date = this.dateRange.start
-                this.form.end_date = this.dateRange.end
+                this.form.start_date = this.formatDate(this.dateRange.start)
+                this.form.end_date = this.formatDate(this.dateRange.end)
+            },
+
+            form: {
+                deep: true,
+                handler: throttle(function () {
+                    this.$inertia.get(
+                        route('mutations'),
+                        pickBy(this.form),
+                        {
+                            preserveState: true,
+                        }
+                    )
+                }, 150),
             }
         },
 
         methods: {
-            filterModels() {
-                this.formFormatDates
-                this.$inertia.get(route('mutations'), pickBy(this.form), { preserveState: true})
+            formatDate(date) {
+                return moment(date).format('Y-MM-DD')
             },
 
-            downloadModels() {
-                this.formFormatDates
+            onClickDownload() {
                 const params = new URLSearchParams(this.form).toString()
                 const link = document.createElement('a');
                 link.href = route('mutations.download') + `?${params}`
                 document.body.appendChild(link);
                 link.click();
-            },
-
-            formatDate(inputValue) {
-                return moment(inputValue, "MM/DD/YYYY").format('DD MMMM Y')
             },
         },
 
@@ -159,15 +147,6 @@
                     }
                 ]
             },
-
-            formFormatDates() {
-                this.form.start_date = moment(this.form.start_date).format('Y-MM-DD')
-                this.form.end_date = moment(this.form.end_date).format('Y-MM-DD')
-            },
-
-            canDownload() {
-                return this.$page.props.user.can['downloadMutations']
-            },
-        }
+        },
     }
 </script>

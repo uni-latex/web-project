@@ -1,6 +1,12 @@
 <template>
     <div v-if="models.data.length > 0" class="mt-6 bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 text-sm">
 
+        <div v-if="$page.props.user.can['downloadMutations']" class="flex justify-end mb-6">
+            <button @click="download" class="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
+                Download
+            </button>
+        </div>
+
         <div class="overflow-auto">
 
             <table class="w-full">
@@ -64,5 +70,11 @@
         props: [
             'models',
         ],
+
+        methods: {
+            download() {
+                this.$emit('on-download')
+            }
+        }
     }
 </script>

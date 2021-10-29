@@ -1,24 +1,25 @@
 <?php
 
-namespace App\Nova;
+namespace App\Nova\Customs;
 
+use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Upload extends Resource
+class DocumentItem extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Customs\Upload::class;
+    public static $model = \App\Models\Customs\DocumentItem::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -36,21 +37,22 @@ class Upload extends Resource
         'id',
     ];
 
-    public static $group = "Customs";
+    public static $group = 'Customs';
 
-    public function fieldsForIndex(Request $request)
+    public function fieldsforIndex(Request $request)
     {
         return [
-            Text::make(__('File Model'), function () {
-                return class_basename($this->file_model);
+            BelongsTo::make(__('Document'), 'document', Document::class),
+
+            Text::make(__('Receipt Number')),
+
+            Date::make(__('Receipt Date')),
+
+            Text::make(__('Goods Code')),
+
+            Text::make(__('Goods Name'), function () {
+                return $this->goods_name_1 . ' ' . $this->goods_name_2;
             }),
-
-            Date::make(__('Created'), 'created_at')
-                ->format('DD MMMM Y'),
-
-            BelongsTo::make(__('User'), 'user', User::class),
-
-            Boolean::make(__('success'), 'is_success'),
         ];
     }
 
@@ -63,23 +65,29 @@ class Upload extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make(__('Type')),
+            BelongsTo::make(__('Document'), 'document', Document::class),
 
-            Text::make(__('File Model')),
+            Text::make(__('Receipt Number')),
 
-            Date::make(__('File Date')),
+            Date::make(__('Receipt Date')),
 
-            Text::make(__('Original File')),
+            Text::make(__('Goods Code')),
 
-            Text::make(__('File Size')),
+            Text::make(__('Goods Name'), function () {
+                return $this->goods_name_1 . ' ' . $this->goods_name_2;
+            }),
 
-            BelongsTo::make(__('User'), 'user', User::class),
+            Text::make(__("Unit")),
 
-            Boolean::make(__('success'), 'is_success'),
+            Text::make(__('Quantity')),
 
-            Textarea::make(__('Exception'))
-                ->alwaysShow(),
+            Text::make(__('Valas')),
 
+            Text::make(__('Value')),
+
+            Textarea::make(__('Annotation'), function () {
+                return $this->annotation_1 . ' ' . $this->annotation_2;
+            })->alwaysShow(),
         ];
     }
 
@@ -125,5 +133,10 @@ class Upload extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
     }
 }

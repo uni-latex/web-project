@@ -6,6 +6,7 @@ use App\Http\Controllers\Secure\DashboardController;
 use App\Http\Controllers\Secure\DocumentController;
 use App\Http\Controllers\Secure\MutationController;
 use App\Http\Controllers\Secure\UploadController;
+use App\Http\Controllers\Secure\LogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::get('/upload', [UploadController::class, 'index'])->name('upload');
     Route::post('/upload', [UploadController::class, 'upload']);
+
+    Route::get('/logs', [LogController::class, 'index'])->name('logs');
 });
 
 

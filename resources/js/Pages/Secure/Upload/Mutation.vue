@@ -1,27 +1,26 @@
 <template>
-    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 text-sm mt-6">
+    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5 text-sm">
 
         <div class="text-2xl tracking-widest uppercase">Mutation</div>
 
-        <form @submit.prevent="uploadMutation" class="mt-6">
+        <form @submit.prevent="uploadMutation">
 
             <!-- date range fields -->
             <div class="flex w-full">
                 <DatePicker v-model="form.mutation_date" :attributes="datePickerAttribute" class="w-full" required>
-                    <template v-slot="{ inputValue, inputEvents }">
+                    <template v-slot="{ inputValue, togglePopover }">
                         <jet-label for="start_date" value="Tanggal" />
                         <input
-                            class="w-full mt-1 p-2 border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm"
-                            :value="formatDate(inputValue)"
-                            v-on="inputEvents"
-                        />
+                            class="w-full mt-1 p-2.5 border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 focus:outline-none rounded-md shadow-sm"
+                            :value="inputValue"
+                            @click="togglePopover" />
                     </template>
                 </DatePicker>
             </div>
 
             <div class="mt-4">
                 <jet-label for="mutation_type" value="Jenis Mutasi" />
-                <jet-select id="mutation_type" class="mt-1 block w-full" v-model="form.mutation_type" :options="mutationTypeOptions" required />
+                <jet-select id="mutation_type" class="mt-1 block w-full" v-model="form.mutation_type" :options="$page.props.fields.mutation_types" required />
             </div>
 
             <div class="flex flex-col mt-4">
@@ -68,19 +67,10 @@
 
         data() {
             return {
-                mutationTypeOptions: {
-                    bbp: "Bahan Baku dan Bahan Penolong",
-                    bdp: "Posisi Barang dalam Proses ( WIP )",
-                    bj: "Barang Jadi",
-                    bs: "Barang Sparepart",
-                    bsds: "Barang Sisa dan Scrap",
-                    mdpk: "Mesin dan Peralatan Kantor",
-                },
-
                 form: this.$inertia.form({
                     type: 'mutation',
                     mutation_date: new Date(),
-                    mutation_type: 'bbp',
+                    mutation_type: Object.keys(this.$page.props.fields.mutation_types)[0],
                     mutation_file: null,
                 })
             }
@@ -89,12 +79,8 @@
         methods: {
             uploadMutation() {
                 this.form.post(route('upload'), {
-                    onFinish: () => this.form.reset('file')
+                    onFinish: () => this.form.reset()
                 })
-            },
-
-            formatDate(inputValue) {
-                return moment(inputValue, "MM/DD/YYYY").format('DD MMMM Y')
             },
         },
 
@@ -104,7 +90,6 @@
                     {
                         key: 'today',
                         dot: 'red',
-                        dates: new Date(),
                     }
                 ]
             },

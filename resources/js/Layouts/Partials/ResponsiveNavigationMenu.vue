@@ -4,6 +4,22 @@
             <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                 Dashboard
             </jet-responsive-nav-link>
+
+            <jet-responsive-nav-link v-if="$page.props.user.can['viewDocuments']" :href="route('documents')" :active="route().current('documents')">
+                Documents
+            </jet-responsive-nav-link>
+
+            <jet-responsive-nav-link v-if="$page.props.user.can['viewMutations']" :href="route('mutations')" :active="route().current('mutations')">
+                Mutations
+            </jet-responsive-nav-link>
+
+            <jet-responsive-nav-link v-if="$page.props.user.can['uploadDocument'] || $page.props.user.can['uploadMutation']" :href="route('upload')" :active="route().current('upload')">
+                Upload
+            </jet-responsive-nav-link>
+
+            <jet-responsive-nav-link v-if="$page.props.user.can['viewLogs']" :href="route('logs')" :active="route().current('logs')">
+                Logs
+            </jet-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

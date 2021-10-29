@@ -21,39 +21,34 @@ class DocumentController extends Controller
             return Redirect::route('dashboard');
         }
 
-        $ignores = ['per_page', 'start_date', 'end_date'];
-
         $filters = $this->filters($request);
 
-        $documents = Document::query()
-            ->orderBy('doc_date', 'desc');
-
-        foreach($filters as $filter => $value) {
-            if (in_array($filter, $ignores)) continue;
-            $documents->where($filter, $value);
-        }
-
-        $documents->whereBetween('doc_date', [$filters['start_date'], $filters['end_date']]);
-
-        $documents = $documents
+        $models = Document::query()
+            ->filter($filters)
             ->with('items')
-            ->paginate($filters['per_page'])
+            ->paginate(25)
             ->withQueryString();        // fungsi ini digunakan agar query lain ditambahkan untuk pagination links
 
         return Inertia::render('Secure/Document/Index', [
+            'fields' => [
+                'transaction_types' => config('customs.documents.transaction_types'),
+                'document_types' => config('customs.documents.document_types'),
+            ],
             'filters' => $filters,
-            'documents' => $documents,
+            'models' => $models,
         ]);
     }
 
     private function filters(Request $request)
     {
         $filters = [
-            'transaction_type' => 1,
-            'doc_type' => "BC2.3",
+            'transaction_type' => array_key_first(config('customs.documents.transaction_types')),
+            'doc_type' => array_key_first(config('customs.documents.document_types')),
             'start_date' => now()->subMonths(2)->format('Y-m-d'),
             'end_date' => now()->format('Y-m-d'),
-            'per_page' => 25,
+            'goods_code' => '',
+            'goods_name' => '',
+            'vendor' => '',
         ];
 
         foreach ($filters as $key => $value) {
@@ -69,14 +64,11 @@ class DocumentController extends Controller
             return Redirect::route('documents');
         }
 
-        $transaction_type = $request->transaction_type;
-        $doc_type = $request->doc_type;
-        $startDate = $request->start_date;
-        $endDate = $request->end_date;
+        $filters = $this->filters($request);
 
-        $transaksi = $transaction_type == 1 ? "PEMASUKAN" : "PENGELUARAN";
-        $headingStartDate = Carbon::parse($startDate)->format('d F Y');
-        $headingEndDate = Carbon::parse($endDate)->format('d F Y');
+        $transaksi = $filters['transaction_type'] == 1 ? "PEMASUKAN" : "PENGELUARAN";
+        $headingStartDate = Carbon::parse($filters['start_date'])->format('d F Y');
+        $headingEndDate = Carbon::parse($filters['end_date'])->format('d F Y');
         $companyName = strtoupper(config('app.name'));
         $headings = [
             "DEPARTEMEN KEUANGAN REPUBLIK INDONESIA",
@@ -93,9 +85,8 @@ class DocumentController extends Controller
 
         $filename = "LAPORAN {$transaksi} BARANG PER DOKUMEN PABEAN.xls";
 
-        $documents = Document::where('transaction_type', $transaction_type)
-            ->where('doc_type', $doc_type)
-            ->whereBetween('doc_date', [$startDate, $endDate])
+        $documents = Document::query()
+            ->filter($filters)
             ->with('items')
             ->get();
 

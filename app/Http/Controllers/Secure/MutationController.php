@@ -30,32 +30,22 @@ class MutationController extends Controller
 
         $filters = $this->filters($request);
 
-        $models = $this->mutationModel($filters['mutation_type'])::query()
-            ->select($this->columnSelect())
-            ->whereBetween('mutation_date', [$filters['start_date'], $filters['end_date']])
-            ->groupby('goods_code');
+        $model = config('customs.mutations.models')[$filters['mutation_type']];
 
-        $models = $models->paginate($filters['per_page'])
+        $models = $model::query()
+            ->select($this->columnSelect())
+            ->filter($filters)
+            ->groupby('goods_code')
+            ->paginate(25)
             ->withQueryString();
 
         return Inertia::render('Secure/Mutation/Index', [
+            "fields" => [
+                'mutation_types' => config('customs.mutations.mutation_types'),
+            ],
             'filters' => $filters,
             'models' => $models,
         ]);
-    }
-
-    private function mutationModel($mutation_type)
-    {
-        $models = [
-            'bbp' => BahanBakuDanPenolong::class,
-            'bdp' => BarangDalamProses::class,
-            'bj' => BarangJadi::class,
-            'bs' => BarangSparepart::class,
-            'bsds' => BarangSisaDanScrap::class,
-            'mdpk' => MesinDanPeralatanKantor::class,
-        ];
-
-        return $models[$mutation_type];
     }
 
     private function columnSelect()
@@ -77,10 +67,11 @@ class MutationController extends Controller
     private function filters(Request $request)
     {
         $filters = [
-            'mutation_type' => 'bbp',
+            'mutation_type' => array_key_first(config('customs.mutations.mutation_types')),
             'start_date' => now()->subMonths(2)->format('Y-m-d'),
             'end_date' => now()->format('Y-m-d'),
-            'per_page' => 25,
+            'goods_code' => '',
+            'goods_name' => '',
         ];
 
         foreach ($filters as $key => $value) {
@@ -96,13 +87,13 @@ class MutationController extends Controller
             return redirect(route('mutations'));
         }
 
-        $mutation_type = $request->mutation_type;
-        $startDate = $request->start_date;
-        $endDate = $request->end_date;
+        $filters = $this->filters($request);
 
-        $reportName = "LAPORAN PERTANGGUNGJAWABAN MUTASI " . Str::upper($this->mutationName($mutation_type));
-        $headingStartDate = Carbon::parse($startDate)->format('d F Y');
-        $headingEndDate = Carbon::parse($endDate)->format('d F Y');
+        $mutationName = config('customs.mutations.mutation_types')[$filters['mutation_type']];
+
+        $reportName = "LAPORAN PERTANGGUNGJAWABAN MUTASI " . Str::upper($mutationName);
+        $headingStartDate = Carbon::parse($filters['start_date'])->format('d F Y');
+        $headingEndDate = Carbon::parse($filters['end_date'])->format('d F Y');
         $companyName = strtoupper(config('app.name'));
 
         $headings = [
@@ -120,9 +111,11 @@ class MutationController extends Controller
 
         $filename = "{$reportName}.xls";
 
-        $models = $this->mutationModel($mutation_type)::query()
+        $model = config('customs.mutations.models')[$filters['mutation_type']];
+
+        $models = $model::query()
             ->select($this->columnSelect())
-            ->whereBetween('mutation_date', [$startDate, $endDate])
+            ->filter($filters)
             ->groupby('goods_code')
             ->get();
 
@@ -130,19 +123,5 @@ class MutationController extends Controller
             new MutationViewExport($request, $models, $headings),
             $filename
         );
-    }
-
-    private function mutationName($mutation_type)
-    {
-        $names = [
-            'bbp' => 'Bahan Baku dan Bahan Penolong',
-            'bdp' => 'Posisi Barang dalam Proses ( WIP )',
-            'bj' => 'Barang Jadi',
-            'bs' => 'Barang Sparepart',
-            'bsds' => 'Barang Sisa dan Scrap',
-            'mdpk' => 'Mesin dan Peralatan Kantor'
-        ];
-
-        return $names[$mutation_type];
     }
 }
