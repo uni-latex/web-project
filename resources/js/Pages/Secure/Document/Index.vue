@@ -45,17 +45,32 @@
 
                         <div class="flex flex-col w-full">
                             <jet-label value="Kode Barang" />
-                            <jet-input type="text" class="mt-1 block w-full" v-model="form.goods_code" />
+                            <div class="flex items-center">
+                                <jet-input type="text" class="mt-1 block w-full" v-model="form.goods_code" />
+                                <button  v-if="form.goods_code" class="ml-2 text-xs uppercase" @click="resetGoodsCode">
+                                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="flex flex-col w-full mt-2 md:mt-0">
                             <jet-label value="Nama Barang" />
-                            <jet-input type="text" class="mt-1 block w-full" v-model="form.goods_name" />
+                            <div class="flex items-center">
+                                <jet-input type="text" class="mt-1 block w-full" v-model="form.goods_name" />
+                                <button  v-if="form.goods_name" class="ml-2 text-xs uppercase" @click="resetGoodsName">
+                                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="flex flex-col w-full mt-2 md:mt-0">
                             <jet-label value="Vendor" />
-                            <jet-input type="text" class="mt-1 block w-full" v-model="form.vendor" />
+                            <div class="flex items-center">
+                                <jet-input type="text" class="mt-1 block w-full" v-model="form.vendor" />
+                                <button  v-if="form.vendor" class="ml-2 text-xs uppercase" @click="resetVendor">
+                                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </button>
+                            </div>
                         </div>
 
                     </div>
@@ -147,6 +162,18 @@
                 link.href = route('documents.download') + `?${params}`
                 document.body.appendChild(link);
                 link.click();
+            },
+
+            resetGoodsName() {
+                this.form.goods_name = ''
+            },
+
+            resetGoodsCode() {
+                this.form.goods_code = ''
+            },
+
+            resetVendor() {
+                this.form.vendor = ''
             },
         },
 
