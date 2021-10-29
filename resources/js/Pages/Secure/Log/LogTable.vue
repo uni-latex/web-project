@@ -21,7 +21,7 @@
                         <td class="border p-2 text-center">{{ models.from + index}}</td>
                         <td class="border p-2 uppercase text-center">{{ model.type }}</td>
                         <td class="border p-2 truncate">{{ model.original_file }}</td>
-                        <td class="border p-2">{{ formatDate(model.file_date) }}</td>
+                        <td class="border p-2 truncate">{{ formatDate(model.file_date) }}</td>
                         <td class="border p-2 truncate">{{ formatDateTime(model.created_at) }}</td>
                         <td class="border p-2 text-center">{{ model.user.name }}</td>
                         <td class="border p-2 flex justify-center items-start">

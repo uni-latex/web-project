@@ -45,10 +45,10 @@ class Upload extends Resource
                 return class_basename($this->file_model);
             }),
 
+            Date::make(__('File Date')),
+
             Date::make(__('Created'), 'created_at')
                 ->format('DD MMMM Y'),
-
-            BelongsTo::make(__('User'), 'user', User::class),
 
             Boolean::make(__('success'), 'is_success'),
         ];
