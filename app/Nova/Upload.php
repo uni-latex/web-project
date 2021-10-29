@@ -45,7 +45,8 @@ class Upload extends Resource
                 return class_basename($this->file_model);
             }),
 
-            Date::make(__('File Date')),
+            Date::make(__('File Date'))
+                ->format('DD MMMM Y'),
 
             Date::make(__('Created'), 'created_at')
                 ->format('DD MMMM Y'),
