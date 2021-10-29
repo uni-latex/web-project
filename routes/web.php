@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/mutations/download', [MutationController::class, 'download'])->name('mutations.download');
 
     Route::get('/uploads', [UploadController::class, 'index'])->name('uploads');
-    Route::post('/uploads', [UploadController::class, 'uploads']);
+    Route::post('/uploads', [UploadController::class, 'upload']);
 
     Route::get('/logs', [LogController::class, 'index'])->name('logs');
 });
