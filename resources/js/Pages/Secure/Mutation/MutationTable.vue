@@ -30,11 +30,11 @@
                     </tr>
                 </thead>
 
-                <tbody v-for="(model, index) in models.data" class="hover:bg-primary-50" :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-100'">
+                <tbody v-for="(model, index) in models.data" class="hover:bg-primary-50 text-left" :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-100'">
                     <tr>
-                        <td class="border p-2">{{ models.from + index }}</td>
-                        <td class="border p-2 text-left truncate">{{ model.goods_code }}</td>
-                        <td class="border p-2 text-left truncate">{{ model.goods_name }}</td>
+                        <td class="border p-2 text-center">{{ models.from + index }}</td>
+                        <td class="border p-2 truncate">{{ model.goods_code }}</td>
+                        <td class="border p-2 truncate">{{ model.goods_name }}</td>
                         <td class="border p-2">{{ model.unit }}</td>
                         <td class="border p-2 text-right">{{ model.beginning_balance | numeralFormat }}</td>
                         <td class="border p-2 text-right">{{ model.entering | numeralFormat }}</td>
