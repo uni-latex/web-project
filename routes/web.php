@@ -32,18 +32,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/mutations/download', [MutationController::class, 'download'])->name('mutations.download');
 
     Route::get('/uploads', [UploadController::class, 'index'])->name('uploads');
-    Route::post('/uploads', [UploadController::class, 'upload']);
+    Route::post('/uploads', [UploadController::class, 'uploads']);
 
     Route::get('/logs', [LogController::class, 'index'])->name('logs');
-});
-
-
-Route::get('/test', function () {
-    $user = \App\Models\User::find(2);
-
-    $permissions = \App\Models\Permission::all();
-
-    foreach ($permissions as $permission) {
-        dump($permission->name . ' -> ' . $user->hasPermissionTo($permission->name) );
-    }
 });

@@ -37,7 +37,7 @@ class UploadController extends Controller
         return Redirect::route('dashboard');
     }
 
-    public function upload(Request $request)
+    public function uploads(Request $request)
     {
         if (! Auth::user()->can('uploadDocument') || ! Auth::user()->can('uploadMutation')) {
             return Redirect::route('dashboard');
@@ -93,7 +93,7 @@ class UploadController extends Controller
 
         Storage::delete($storageFile);
 
-        return Redirect::route('upload');
+        return Redirect::route('uploads');
     }
 
     public function uploadMutation(Request $request)
@@ -144,7 +144,7 @@ class UploadController extends Controller
 
         Storage::delete($storageFile);
 
-        return Redirect::route('upload');
+        return Redirect::route('uploads');
     }
 
     private function parseDocumentFilename($filename)
