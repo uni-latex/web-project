@@ -5,7 +5,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <Link :href="route('home')">
-                        <jet-application-mark class="block h-9 w-auto" />
+                        <img class="h-12" :src="$page.props.app.logo" />
                     </Link>
                 </div>
 

@@ -7,7 +7,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-4 lg:px-8">
                 <div class="h-16 flex items-center justify-between">
                     <Link :href="route('home')" class="flex items-center">
-                        <img class="h-12" src="https://laravel.com/img/notification-logo.png">
+                        <img class="h-12" :src="$page.props.app.logo" />
                         <span class="hidden md:block ml-4 uppercase tracking-widest text-2xl">{{ $page.props.app.name }}</span>
                     </Link>
                     <div class="flex items-center space-x-4">

@@ -4,5 +4,5 @@
     <span class="px-1">&middot;</span>
     Nova v{{ \Laravel\Nova\Nova::version() }}
     <span class="px-1">&middot;</span>
-    {{ config('app.name') }}
+    {{ nova_get_setting('name', config('app.name')) }}
 </p>

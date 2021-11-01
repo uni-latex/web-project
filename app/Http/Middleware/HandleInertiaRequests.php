@@ -42,8 +42,9 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'app' => [
-                'name' => config('app.name'),
-                'showToken' => false,
+                'name' => nova_get_setting('name', config('web.name')),
+                'logo' => nova_get_setting('logo', config('web.logo')),
+                'showToken' => config('web.show_token'),
             ],
             'admin' => function () use ($request) {
                 if (! $request->user() ) {

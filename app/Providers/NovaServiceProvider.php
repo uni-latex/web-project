@@ -2,10 +2,15 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Cards\Help;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Laravel\Nova\Panel;
+use OptimistDigital\NovaSettings\NovaSettings;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -17,6 +22,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        NovaSettings::addSettingsFields([
+            Panel::make('Site', [
+                Text::make(__('Name')),
+
+                Image::make(__('Logo'))
+                    ->prunable(),
+            ]),
+        ]);
     }
 
     /**
@@ -56,7 +70,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            new Help,
+//            new Help,
         ];
     }
 
@@ -77,7 +91,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
-        return [];
+        return [
+            (new NovaSettings)->canSee(function () {
+                if (Auth::user()->can('viewSettings')) {
+                    return true;
+                }
+            }),
+        ];
     }
 
     /**

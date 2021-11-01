@@ -3,7 +3,7 @@
 @else
 {{--    <div class="w-full text-center">{{ config('app.name') }}</div>--}}
     <div class="flex w-full justify-center">
-        <img class="h-12" src="https://laravel.com/img/notification-logo.png">
+        <img class="h-8" src="{{ asset(nova_get_setting('logo')) }}">
     </div>
 @endif
 
