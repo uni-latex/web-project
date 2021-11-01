@@ -32,4 +32,12 @@ class Upload extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        return $query
+            ->when($filters['upload_type'] ?? null,function ($query, $search) {
+                $query->where('type', $search);
+            });
+    }
 }

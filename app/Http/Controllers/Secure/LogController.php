@@ -17,14 +17,37 @@ class LogController extends Controller
             return Redirect::route('dashboard');
         }
 
+        $filters = $this->filters($request);
+
         $logs = Upload::select('type', 'file_date', 'original_file', 'user_id', 'created_at', 'is_success')
             ->with('user:id,name')
             ->latest()
+            ->filter($filters)
             ->paginate(25)
             ->withQueryString();
 
         return Inertia::render('Secure/Log/Index', [
+            'fields' => [
+                'upload_types' => [
+                    'document' => 'Document',
+                    'mutation' => 'Mutation'
+                ],
+            ],
+            'filters' => $filters,
             'models' => $logs,
         ]);
+    }
+
+    private function filters(Request $request)
+    {
+        $filters = [
+            'upload_type' => '',
+        ];
+
+        foreach ($filters as $key => $value) {
+            $filters[$key] = $request->get($key) ?? $filters[$key];
+        }
+
+        return $filters;
     }
 }

@@ -25,7 +25,12 @@ class Document extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'doc_number';
+
+    public function title()
+    {
+        return $this->doc_type . ' ' . $this->doc_number;
+    }
 
     /**
      * The columns that should be searched.
@@ -33,7 +38,7 @@ class Document extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'doc_type', 'doc_number', 'vendor'
     ];
 
     public static $group = 'Customs';

@@ -1,26 +1,17 @@
 <?php
 
+
 namespace App\Nova\Customs;
+
 
 use App\Nova\Resource;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
-class DocumentItem extends Resource
+abstract class Mutation extends Resource
 {
-    /**
-     * The model the resource corresponds to.
-     *
-     * @var string
-     */
-    public static $model = \App\Models\Customs\DocumentItem::class;
-
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
@@ -34,25 +25,20 @@ class DocumentItem extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'receipt_number', 'goods_code', 'goods_name_1',
+        'id', 'goods_code', 'goods_name'
     ];
 
     public static $group = 'Customs';
 
-    public function fieldsforIndex(Request $request)
+    public function fieldsForIndex(Request $request)
     {
         return [
-            BelongsTo::make(__('Document'), 'document', Document::class),
-
-            Text::make(__('Receipt Number')),
-
-            Date::make(__('Receipt Date')),
+            Date::make(__('Mutation Date'))
+                ->format('DD/MM/YYYY'),
 
             Text::make(__('Goods Code')),
 
-            Text::make(__('Goods Name'), function () {
-                return $this->goods_name_1 . ' ' . $this->goods_name_2;
-            }),
+            Text::make(__("Goods Name")),
         ];
     }
 
@@ -65,29 +51,31 @@ class DocumentItem extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make(__('Document'), 'document', Document::class),
-
-            Text::make(__('Receipt Number')),
-
-            Date::make(__('Receipt Date')),
+            Date::make(__('Mutation Date'))
+                ->format('DD/MM/YYYY'),
 
             Text::make(__('Goods Code')),
 
-            Text::make(__('Goods Name'), function () {
-                return $this->goods_name_1 . ' ' . $this->goods_name_2;
-            }),
+            Text::make(__("Goods Name")),
 
-            Text::make(__("Unit")),
+            Text::make(__('Unit')),
 
-            Text::make(__('Quantity')),
+            Text::make(__('Beginning Balance')),
 
-            Text::make(__('Valas')),
+            Text::make(__('Entering')),
 
-            Text::make(__('Value')),
+            Text::make(__('Spending')),
 
-            Textarea::make(__('Annotation'), function () {
-                return $this->annotation_1 . ' ' . $this->annotation_2;
-            })->alwaysShow(),
+            Text::make(__('Compliance')),
+
+            Text::make(__('Final Balance')),
+
+            Text::make(__('Stock Opname')),
+
+            Text::make(__('Difference')),
+
+            Textarea::make(__('Annotation'))
+                ->alwaysShow(),
         ];
     }
 
