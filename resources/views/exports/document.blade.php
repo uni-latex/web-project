@@ -6,32 +6,32 @@
         </tr>
     @endforeach
     <tr>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 5px;" rowspan="2">No</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;" rowspan="2">Jenis Dokumen</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold;" colspan="2">Dokumen Pabean</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold;" colspan="2">Bukti Penerimaan Barang</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 40px;" rowspan="2">
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 40px;" rowspan="2">No</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 100px;" rowspan="2">Jenis Dokumen</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;" colspan="2">Dokumen Pabean</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;" colspan="2">Bukti Penerimaan Barang</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 250px;" rowspan="2">
             @if ($transaction_type == 0)
                 Pembeli / Penerima
             @else
                 Pemasok / Pengirim
             @endif
         </th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;" rowspan="2">Kode Brg.</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 20px;" rowspan="2">Nama Barang - 1</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 20px;" rowspan="2">Nama Barang - 2</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold;" rowspan="2">Sat.</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;" rowspan="2">Jumlah</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold;" rowspan="2">Valas</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;" rowspan="2">Nilai Barang</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;" rowspan="2">Ket.- 1</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;" rowspan="2">Ket.- 2</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;" rowspan="2">Kode Brg.</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 250px;" rowspan="2">Nama Barang - 1</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 250px;" rowspan="2">Nama Barang - 2</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;" rowspan="2">Sat.</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 120px;" rowspan="2">Jumlah</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;" rowspan="2">Valas</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 120px;" rowspan="2">Nilai Barang</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;" rowspan="2">Ket.- 1</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;" rowspan="2">Ket.- 2</th>
     </tr>
     <tr>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Nomor</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Tanggal</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Nomor</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Tanggal</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 80px;">Nomor</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 80px;">Tanggal</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 80px;">Nomor</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 80px;">Tanggal</th>
     </tr>
     </thead>
     <tbody>
@@ -39,16 +39,16 @@
         @foreach ($document->items as $item)
             @if ($loop->first)
                 <tr>
-                    <td style="border: 1px solid black; text-align: center; vertical-align: top;" rowspan="{{ count($document->items) }}">{{ $index + 1 }}</td>
-                    <td style="border: 1px solid black; text-align: center; vertical-align: top;" rowspan="{{ count($document->items) }}">{{ $document->doc_type }}</td>
-                    <td style="border: 1px solid black; text-align: center; vertical-align: top;" rowspan="{{ count($document->items) }}">{{ $document->doc_number }}</td>
-                    <td style="border: 1px solid black; text-align: center; vertical-align: top;" rowspan="{{ count($document->items) }}">{{ $document->doc_date->format('d/m/Y') }}</td>
-                    <td style="border: 1px solid black; text-align: center; vertical-align: top;" rowspan="{{ count($document->items) }}">{{ $item->receipt_number }}</td>
-                    <td style="border: 1px solid black; text-align: center; vertical-align: top;" rowspan="{{ count($document->items) }}">{{ $item->receipt_date->format('d/m/Y') }}</td>
-                    <td style="border: 1px solid black; vertical-align: top;" rowspan="{{ count($document->items) }}">{{ $document->vendor }}</td>
+                    <td style="border: 1px solid black; text-align: center;" rowspan="{{ count($document->items) }}">{{ $index + 1 }}</td>
+                    <td style="border: 1px solid black; text-align: center;" rowspan="{{ count($document->items) }}">{{ $document->doc_type }}</td>
+                    <td style="border: 1px solid black; text-align: center;" rowspan="{{ count($document->items) }}">{{ $document->doc_number }}</td>
+                    <td style="border: 1px solid black; text-align: center;" rowspan="{{ count($document->items) }}">{{ $document->doc_date->format('d/m/Y') }}</td>
+                    <td style="border: 1px solid black; text-align: center;" rowspan="{{ count($document->items) }}">{{ $item->receipt_number }}</td>
+                    <td style="border: 1px solid black; text-align: center;" rowspan="{{ count($document->items) }}">{{ $item->receipt_date->format('d/m/Y') }}</td>
+                    <td style="border: 1px solid black;" rowspan="{{ count($document->items) }}">{{ $document->vendor }}</td>
                     <td style="border: 1px solid black; text-align: center;">{{ $item->goods_code }}</td>
-                    <td style="border: 1px solid black; width: 50px;">{{ $item->goods_name_1 }}</td>
-                    <td style="border: 1px solid black; width: 50px;">{{ $item->goods_name_2 }}</td>
+                    <td style="border: 1px solid black;">{{ $item->goods_name_1 }}</td>
+                    <td style="border: 1px solid black;">{{ $item->goods_name_2 }}</td>
                     <td style="border: 1px solid black; text-align: center;">{{ $item->unit }}</td>
                     <td style="border: 1px solid black; text-align: right;">{{ $item->quantity }}</td>
                     {{--                    <td style="border: 1px solid black; text-align: right;">{{ number_format($item->quantity, 2) }}</td>--}}
@@ -61,8 +61,8 @@
             @else
                 <tr>
                     <td style="border: 1px solid black; text-align: center;">{{ $item->goods_code }}</td>
-                    <td style="border: 1px solid black; width: 50px;">{{ $item->goods_name_1 }}</td>
-                    <td style="border: 1px solid black; width: 50px;">{{ $item->goods_name_2 }}</td>
+                    <td style="border: 1px solid black;">{{ $item->goods_name_1 }}</td>
+                    <td style="border: 1px solid black;">{{ $item->goods_name_2 }}</td>
                     <td style="border: 1px solid black; text-align: center;">{{ $item->unit }}</td>
                     <td style="border: 1px solid black; text-align: right;">{{ $item->quantity }}</td>
                     {{--                    <td style="border: 1px solid black; text-align: right;">{{ number_format($item->quantity, 2) }}</td>--}}

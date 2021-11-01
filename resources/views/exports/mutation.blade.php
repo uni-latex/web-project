@@ -12,17 +12,17 @@
         @endif
     @endforeach
     <tr>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Kode Barang</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 45px;">Nama Barang</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Satuan</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Saldo Awal</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Pemasukan</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Pengeluaran</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Penyesuaian</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Saldo Akhir</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Stock Opname</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Selisih</th>
-        <th style="border: 1px solid black; text-align: center; vertical-align: center; background-color: #a0aec0; font-weight: bold; width: 15px;">Ket</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 80px">Kode Barang</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Nama Barang</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Satuan</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Saldo Awal</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Pemasukan</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Pengeluaran</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Penyesuaian</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Saldo Akhir</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Stock Opname</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Selisih</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Ket</th>
     </tr>
     </thead>
     <tbody>
