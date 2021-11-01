@@ -3,7 +3,16 @@
 @else
 {{--    <div class="w-full text-center">{{ config('app.name') }}</div>--}}
     <div class="flex w-full justify-center">
-        <img class="h-8" src="{{ asset(nova_get_setting('logo')) }}">
+        @php
+            $novaLogo = nova_get_setting('logo');
+            if ($novaLogo) {
+                $novaLogo = asset("storage/{$novaLogo}");
+            }
+            else {
+                $novaLogo = config('web.logo');
+            }
+        @endphp
+        <img class="h-8" src="{{ $novaLogo }}">
     </div>
 @endif
 
