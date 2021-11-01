@@ -13,7 +13,7 @@
     @endforeach
     <tr>
         <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 80px">Kode Barang</th>
-        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Nama Barang</th>
+        <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold; width: 250px;">Nama Barang</th>
         <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Satuan</th>
         <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Saldo Awal</th>
         <th style="border: 1px solid black; text-align: center; background-color: #a0aec0; font-weight: bold;">Pemasukan</th>
