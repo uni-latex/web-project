@@ -23,15 +23,12 @@ class LogController extends Controller
             ->with('user:id,name')
             ->latest()
             ->filter($filters)
-            ->paginate(25)
+            ->paginate(config('customs.paginate'))
             ->withQueryString();
 
         return Inertia::render('Secure/Log/Index', [
             'fields' => [
-                'upload_types' => [
-                    'document' => 'Document',
-                    'mutation' => 'Mutation'
-                ],
+                'update_types' => config('customs.logs.upload_types'),
             ],
             'filters' => $filters,
             'models' => $logs,

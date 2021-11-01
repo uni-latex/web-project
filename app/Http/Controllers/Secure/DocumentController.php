@@ -26,7 +26,7 @@ class DocumentController extends Controller
         $models = Document::query()
             ->filter($filters)
             ->with('items')
-            ->paginate(25)
+            ->paginate(config('customs.paginate'))
             ->withQueryString();        // fungsi ini digunakan agar query lain ditambahkan untuk pagination links
 
         return Inertia::render('Secure/Document/Index', [
@@ -44,7 +44,7 @@ class DocumentController extends Controller
         $filters = [
             'transaction_type' => array_key_first(config('customs.documents.transaction_types')),
             'doc_type' => array_key_first(config('customs.documents.document_types')),
-            'start_date' => now()->subMonths(2)->format('Y-m-d'),
+            'start_date' => now()->subMonths(config('customs.start_date_month'))->format('Y-m-d'),
             'end_date' => now()->format('Y-m-d'),
             'goods_code' => '',
             'goods_name' => '',
@@ -69,7 +69,7 @@ class DocumentController extends Controller
         $transaksi = $filters['transaction_type'] == 1 ? "PEMASUKAN" : "PENGELUARAN";
         $headingStartDate = Carbon::parse($filters['start_date'])->format('d F Y');
         $headingEndDate = Carbon::parse($filters['end_date'])->format('d F Y');
-        $companyName = strtoupper(config('app.name'));
+        $companyName = strtoupper(nova_get_setting('name', config('app.name')));
         $headings = [
             "DEPARTEMEN KEUANGAN REPUBLIK INDONESIA",
             "DIREKTORAT JENDERAL BEA DAN CUKAI",

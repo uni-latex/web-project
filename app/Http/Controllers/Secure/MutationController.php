@@ -36,7 +36,7 @@ class MutationController extends Controller
             ->select($this->columnSelect())
             ->filter($filters)
             ->groupby('goods_code')
-            ->paginate(25)
+            ->paginate(config('customs.paginate'))
             ->withQueryString();
 
         return Inertia::render('Secure/Mutation/Index', [
@@ -68,7 +68,7 @@ class MutationController extends Controller
     {
         $filters = [
             'mutation_type' => array_key_first(config('customs.mutations.mutation_types')),
-            'start_date' => now()->subMonths(2)->format('Y-m-d'),
+            'start_date' => now()->subMonths(config('customs.start_date_month'))->format('Y-m-d'),
             'end_date' => now()->format('Y-m-d'),
             'goods_code' => '',
             'goods_name' => '',
@@ -94,7 +94,7 @@ class MutationController extends Controller
         $reportName = "LAPORAN PERTANGGUNGJAWABAN MUTASI " . Str::upper($mutationName);
         $headingStartDate = Carbon::parse($filters['start_date'])->format('d F Y');
         $headingEndDate = Carbon::parse($filters['end_date'])->format('d F Y');
-        $companyName = strtoupper(config('app.name'));
+        $companyName = strtoupper(nova_get_setting('name', config('app.name')));
 
         $headings = [
             $reportName,

@@ -36,4 +36,15 @@ return [
             'mdpk' => App\Models\Customs\MesinDanPeralatanKantor::class,
         ],
     ],
+
+    "logs" => [
+        'upload_types' => [
+            'document' => 'Document',
+            'mutation' => 'Mutation'
+        ],
+    ],
+
+    'start_date_month' => 1,
+
+    'paginate' => 25,
 ];
