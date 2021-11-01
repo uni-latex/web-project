@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
         "optimistdigital/nova-settings": "^3.2",
+        "php-junior/nova-logs": "^1.1",
         "spatie/laravel-permission": "^5.1",
         "tightenco/ziggy": "^1.0"
     },

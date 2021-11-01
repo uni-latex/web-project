@@ -11,6 +11,7 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Laravel\Nova\Panel;
 use OptimistDigital\NovaSettings\NovaSettings;
+use PhpJunior\NovaLogViewer\Tool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -92,11 +93,18 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            // https://github.com/optimistdigital/nova-settings
             (new NovaSettings)->canSee(function () {
                 if (Auth::user()->can('viewSettings')) {
                     return true;
                 }
             }),
+            // https://github.com/PHPJunior/nova-logs
+            (new Tool)->canSee(function () {
+                if (Auth::user()->can('viewNovaLogs')) {
+                    return true;
+                }
+            })
         ];
     }
 
