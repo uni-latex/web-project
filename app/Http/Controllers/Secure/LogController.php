@@ -28,7 +28,7 @@ class LogController extends Controller
 
         return Inertia::render('Secure/Log/Index', [
             'fields' => [
-                'update_types' => config('customs.logs.upload_types'),
+                'upload_types' => config('customs.logs.upload_types'),
             ],
             'filters' => $filters,
             'models' => $logs,
