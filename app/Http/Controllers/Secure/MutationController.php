@@ -3,14 +3,9 @@
 namespace App\Http\Controllers\Secure;
 
 
+use App\Exports\MutationExport;
 use App\Exports\MutationViewExport;
 use App\Http\Controllers\Controller;
-use App\Models\Customs\BahanBakuDanPenolong;
-use App\Models\Customs\BarangDalamProses;
-use App\Models\Customs\BarangJadi;
-use App\Models\Customs\BarangSisaDanScrap;
-use App\Models\Customs\BarangSparepart;
-use App\Models\Customs\MesinDanPeralatanKantor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -123,5 +118,24 @@ class MutationController extends Controller
             new MutationViewExport($request, $models, $headings),
             $filename
         );
+    }
+
+    public function downloadNative(Request $request)
+    {
+        if (! $request->user()->can('downloadMutations')) {
+            return redirect(route('mutations'));
+        }
+
+        $filters = $this->filters($request);
+
+        $mutationName = config('customs.mutations.mutation_types')[$filters['mutation_type']];
+
+        $reportName = "LAPORAN PERTANGGUNGJAWABAN MUTASI " . Str::upper($mutationName);
+
+        $filename = "{$reportName}.xls";
+
+        $model = config('customs.mutations.models')[$filters['mutation_type']];
+
+        return (new MutationExport($model, $filters))->download($filename);
     }
 }

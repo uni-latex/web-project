@@ -27,7 +27,7 @@ class CreateDocumentsTable extends Migration
             $table->integer('transaction_type');
             $table->string('doc_type');
             $table->string('doc_number');
-            $table->string('doc_date');
+            $table->date('doc_date');
             $table->string('vendor');
             $table->timestamps();
         });
