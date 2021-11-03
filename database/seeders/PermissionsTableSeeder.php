@@ -15,6 +15,8 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
         \DB::table('permissions')->delete();
 
         \DB::table('permissions')->insert(array (
@@ -92,6 +94,5 @@ class PermissionsTableSeeder extends Seeder
             ),
         ));
 
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
     }
 }
