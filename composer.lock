@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ee0ba2372604ee14fa3c7fb5c132aef",
+    "content-hash": "c08a498e12d946980fac7873d2d8c686",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1868,16 +1868,16 @@
         },
         {
             "name": "laravel/fortify",
-            "version": "v1.8.2",
+            "version": "v1.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/fortify.git",
-                "reference": "a52a980b922694fbf7298ab70cc3da7fb716cfff"
+                "reference": "19f71710cb4c6a2e774aece8a8c920165a95a059"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/fortify/zipball/a52a980b922694fbf7298ab70cc3da7fb716cfff",
-                "reference": "a52a980b922694fbf7298ab70cc3da7fb716cfff",
+                "url": "https://api.github.com/repos/laravel/fortify/zipball/19f71710cb4c6a2e774aece8a8c920165a95a059",
+                "reference": "19f71710cb4c6a2e774aece8a8c920165a95a059",
                 "shasum": ""
             },
             "require": {
@@ -1927,20 +1927,20 @@
                 "issues": "https://github.com/laravel/fortify/issues",
                 "source": "https://github.com/laravel/fortify"
             },
-            "time": "2021-09-07T14:30:59+00:00"
+            "time": "2021-11-02T16:23:43+00:00"
         },
         {
             "name": "laravel/framework",
-            "version": "v8.68.1",
+            "version": "v8.69.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "abe985ff1fb82dd04aab03bc1dc56e83fe61a59f"
+                "reference": "545181da688db64fed6d8427e55f630a90ca0d32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/abe985ff1fb82dd04aab03bc1dc56e83fe61a59f",
-                "reference": "abe985ff1fb82dd04aab03bc1dc56e83fe61a59f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/545181da688db64fed6d8427e55f630a90ca0d32",
+                "reference": "545181da688db64fed6d8427e55f630a90ca0d32",
                 "shasum": ""
             },
             "require": {
@@ -2099,7 +2099,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-10-27T12:31:46+00:00"
+            "time": "2021-11-02T13:53:22+00:00"
         },
         {
             "name": "laravel/jetstream",
@@ -2173,7 +2173,7 @@
             "version": "3.30.0",
             "dist": {
                 "type": "path",
-                "url": "./nova",
+                "url": "../nova",
                 "reference": "16e1b68b0cd5131db3e6c3c967b254ff5750eee0"
             },
             "require": {
@@ -2449,16 +2449,16 @@
         },
         {
             "name": "laravel/ui",
-            "version": "v3.3.0",
+            "version": "v3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/ui.git",
-                "reference": "07d725813350c695c779382cbd6dac0ab8665537"
+                "reference": "a449e3364d9780a80a49894a3af9795c85af806f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/ui/zipball/07d725813350c695c779382cbd6dac0ab8665537",
-                "reference": "07d725813350c695c779382cbd6dac0ab8665537",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/a449e3364d9780a80a49894a3af9795c85af806f",
+                "reference": "a449e3364d9780a80a49894a3af9795c85af806f",
                 "shasum": ""
             },
             "require": {
@@ -2501,9 +2501,9 @@
                 "ui"
             ],
             "support": {
-                "source": "https://github.com/laravel/ui/tree/v3.3.0"
+                "source": "https://github.com/laravel/ui/tree/v3.3.1"
             },
-            "time": "2021-05-25T16:45:33+00:00"
+            "time": "2021-11-02T17:04:20+00:00"
         },
         {
             "name": "league/commonmark",
